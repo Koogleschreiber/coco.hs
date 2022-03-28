@@ -5,11 +5,10 @@ import Data.List.Split
 type CommitMessage = String
 
 gitLog :: String -> IO [CommitMessage]
-gitLog path = splitLines <$> gitLogIO path
+gitLog path = splitLines <$> gitLogText path
 
-gitLogIO :: String -> IO String
-gitLogIO path = readProcess "git" ["-C", path, "log", "--pretty=format:'%s'"] []
+gitLogText :: String -> IO String
+gitLogText path = readProcess "git" ["-C", path, "log", "--pretty=format:'%s'"] []
 
 splitLines :: String -> [CommitMessage]
 splitLines = splitOn "\n"
-
