@@ -12,8 +12,6 @@ license:            MIT
 -- A URL where users can report bugs.
 -- bug-reports:
 
--- The license under which the package is released.
--- license:
 author:             Leon Teubert
 maintainer:         teubert.leon@googlemail.com
 
@@ -23,6 +21,7 @@ extra-source-files:
     README.md
 
 executable coco-hs
+    other-modules: Git
     main-is:          Main.hs
     build-depends:
         base ^>=4.14.3.0,
