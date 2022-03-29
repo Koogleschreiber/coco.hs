@@ -2,7 +2,6 @@ module Main where
 
 import Git
 import Options.Applicative
-import Data.Semigroup ((<>))
 
 data Options = Options {
   path :: String, quiet :: Bool
@@ -28,5 +27,5 @@ main = execute =<< execParser opts
      <> header "coco.hs" )
 
 execute :: Options -> IO ()
-execute (Options path False) = gitLog path >>= mapM_ putStrLn
+execute (Options p False) = gitLog p >>= mapM_ putStrLn
 execute _ = return ()

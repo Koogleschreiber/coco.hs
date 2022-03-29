@@ -20,13 +20,29 @@ maintainer:         teubert.leon@googlemail.com
 extra-source-files:
     README.md
 
-executable coco-hs
-    other-modules: Git
-    main-is:          Main.hs
+library
+    exposed-modules: Git
+    ghc-options: -Wall
+    hs-source-dirs:   lib/git
+    default-language: Haskell2010
     build-depends:
         base ^>=4.14.3.0,
         process ^>=1.6.14.0,
         split ^>=0.2.3.4,
-        optparse-applicative ^>=0.17.0.0
+
+executable coco-executable
+    ghc-options: -Wall
+    main-is:          Main.hs
     hs-source-dirs:   app
+    default-language: Haskell2010
+    build-depends:
+        coco-hs,
+        base ^>=4.14.3.0,
+        optparse-applicative ^>=0.17.0.0
+
+Test-Suite test
+    type: exitcode-stdio-1.0
+    hs-source-dirs: test
+    main-is:    Tests.hs
+    build-depends: base, HUnit, coco-hs
     default-language: Haskell2010
