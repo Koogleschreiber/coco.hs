@@ -8,7 +8,7 @@ gitLog :: String -> IO [CommitMessage]
 gitLog path = splitIntoCommitMessages <$> gitLogText path
 
 gitLogText :: String -> IO String
-gitLogText path = readProcess "git" ["-C", path, "log", "--pretty=format:'%s'"] []
+gitLogText path = readProcess "git" ["-C", path, "log", "--pretty=format:%s"] []
 
 splitIntoCommitMessages :: String -> [CommitMessage]
 splitIntoCommitMessages = splitOn "\n"
