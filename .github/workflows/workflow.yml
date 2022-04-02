@@ -45,6 +45,7 @@ jobs:
         PKG_NAME: ${{ steps.variables.outputs.pkg_name }}
 
     - name: 📘 Publish Documentation
+      if: matrix.os == 'ubuntu-latest' && github.event_name == 'push'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
