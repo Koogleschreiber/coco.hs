@@ -22,8 +22,8 @@ jobs:
     - name: 📥 Checkout repository
       uses: actions/checkout@v1
 
-    - name: 🧰 Setup Stack
-      uses: mstksg/setup-stack@v1
+        #     - name: 🧰 Setup Stack
+        #       uses: mstksg/setup-stack@v2
 
     - name: 🔑 Cache Key
       id: cache_key
