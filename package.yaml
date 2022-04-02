@@ -1,14 +1,13 @@
 name:                coco-hs
 version:             0.1.0.0
-github:              "githubuser/coco-hs"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2022 Author name here"
+github:              "koogleschreiber/coco.hs"
+license:             MIT
+author:              "Leon Teubert"
+maintainer:          "teubert.leon@gmail.com"
+copyright:           "2022 Leon Teubert"
 
 extra-source-files:
 - README.md
-- ChangeLog.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package

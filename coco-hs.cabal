@@ -7,21 +7,20 @@ cabal-version: 1.12
 name:           coco-hs
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/coco-hs#readme>
-homepage:       https://github.com/githubuser/coco-hs#readme
-bug-reports:    https://github.com/githubuser/coco-hs/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2022 Author name here
-license:        BSD3
+homepage:       https://github.com/koogleschreiber/coco.hs#readme
+bug-reports:    https://github.com/koogleschreiber/coco.hs/issues
+author:         Leon Teubert
+maintainer:     teubert.leon@gmail.com
+copyright:      2022 Leon Teubert
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/coco-hs
+  location: https://github.com/koogleschreiber/coco.hs
 
 library
   exposed-modules:
