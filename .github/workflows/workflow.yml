@@ -1,0 +1,49 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+    tags: [ "*.*.*" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: 💽 Install OS Packages
+      uses: mstksg/get-package@v1
+      with:
+        apt-get: libgmp-dev
+
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v1
+
+    - name: 🧰 Setup Stack
+      uses: mstksg/setup-stack@v1
+
+    - name: 🔑 Cache Key
+      id: cache_key
+      run: echo ::set-output name=key::$(md5sum stack.yaml | awk '{print $1}')
+
+    - name: 💾 Cache Dependencies
+      id: cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.stack
+        key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
+
+    - name: 🔨 Build & Test
+      run: |
+        stack --no-terminal test --bench --haddock --no-haddock-deps --no-run-benchmarks
+        mkdir -p dist/haddock && mv $(stack path --local-install-root)/doc/* dist/haddock
+        sed -i 's@href="[^"]*/doc/\([^"]*.html\)"@href="\1"@g' dist/haddock/index.html
+        wget -O Makefile https://gist.githubusercontent.com/KtorZ/0c7411f9bda2db1b3e0ded2ef0c40381/raw/1f818bd0385d8d917903e3f67ee3bfee3002de7a/Makefile
+        mkdir -p .coverage && touch .coverage/template.overlay
+        DESTDIR=dist/coverage make report && DESTDIR=dist/coverage make badge
+      env:
+        PKG_NAME: ${{ steps.variables.outputs.pkg_name }}
