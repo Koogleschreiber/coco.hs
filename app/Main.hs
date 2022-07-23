@@ -1,22 +1,19 @@
 module Main where
 
-import Git
 import Options.Applicative
 
 data Options = Options {
-  path :: String, quiet :: Bool
+   printHelp :: Bool
 }
+
+helpText = "This is coco.hs a tool to manage semantic versions and releases through the means of conventional commits."
 
 options :: Parser Options
 options = Options
-      <$> strOption
-          ( long "path"
-         <> short 'p'
-         <> help "Path to the git repository" )
-      <*> switch
-          ( long "quiet"
-         <> short 'q'
-         <> help "Whether to be quiet" )
+      <$> switch
+          ( long "help"
+         <> short 'h'
+         <> help "Print help text" )
 
 main :: IO ()
 main = execute =<< execParser opts
@@ -27,5 +24,5 @@ main = execute =<< execParser opts
      <> header "coco.hs" )
 
 execute :: Options -> IO ()
-execute (Options p False) = gitLog p >>= mapM_ putStrLn
+execute (Options True) = putStrLn helpText
 execute _ = return ()
