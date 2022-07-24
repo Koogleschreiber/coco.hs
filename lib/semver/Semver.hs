@@ -24,7 +24,7 @@ instance Show SemanticVersion where
 instance Ord SemanticVersion where
  (SemanticVersion a) <= (SemanticVersion b)
   | SemanticVersion a == SemanticVersion b = True
-  | null a = True
-  | null b = False
+  | null a = SemanticVersion [0] <= SemanticVersion b
+  | null b = SemanticVersion a <= SemanticVersion [0]
   | head a == head b = SemanticVersion (tail a) <= SemanticVersion (tail b)
   | otherwise = head a <= head b
