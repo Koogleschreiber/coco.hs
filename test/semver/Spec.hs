@@ -2,6 +2,7 @@ import Test.QuickCheck
 import Test.Hspec
 import Data.List
 import Semver (SemanticVersion(..))
+import Test.Hspec.QuickCheck (modifyMaxSuccess)
 
 instance Arbitrary SemanticVersion where
   arbitrary = SemanticVersion <$> arbitrary
@@ -41,10 +42,10 @@ transitivity f a b c = (f a b && f b c) `implies` f a c
 main :: IO ()
 main = hspec $ do
   describe "Eq" $
-    do it "prop_eq_reflex" $ property prop_eq_reflex
-       it "prop_eq_trans" $ property prop_eq_trans
-       it "prop_eq_trailing_zeroes" $ property prop_eq_trans
+    do modifyMaxSuccess (const 1000) $ it "prop_eq_reflex" $ property prop_eq_reflex
+       modifyMaxSuccess (const 1000) $ it "prop_eq_trans" $  property prop_eq_trans
+       modifyMaxSuccess (const 1000) $ it "prop_eq_trailing_zeroes" $ property prop_eq_trans
   describe "Ord" $
-    do it "prop_ord_reflex" $ property prop_ord_reflex
-       it "prop_ord_trans" $ property prop_ord_trans
-       it "prop_ord_antisym" $ property prop_ord_antisym
+    do modifyMaxSuccess (const 1000) $ it "prop_ord_reflex" $ property prop_ord_reflex
+       modifyMaxSuccess (const 1000) $ it "prop_ord_trans" $ property prop_ord_trans
+       modifyMaxSuccess (const 1000) $ it "prop_ord_antisym" $ property prop_ord_antisym
