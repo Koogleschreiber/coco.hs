@@ -1,11 +1,11 @@
-module Semver(SemanticVersion(..), lexLeq, vstr) where
+module Semver(SemanticVersion(..), readV) where
 import Data.List.Split
 import Data.Char (digitToInt)
 
 newtype SemanticVersion = SemanticVersion [Int]
 
-vstr :: String -> SemanticVersion
-vstr a = SemanticVersion(map (\s -> read s :: Int) (splitOn "." a))
+readV :: String -> SemanticVersion
+readV a = SemanticVersion(map (\s -> read s :: Int) (splitOn "." a))
 
 instance Eq SemanticVersion where
  SemanticVersion [] == SemanticVersion [] = True

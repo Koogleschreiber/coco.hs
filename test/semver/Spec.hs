@@ -1,14 +1,14 @@
 import Test.QuickCheck
 import Test.Hspec
 import Data.List
-import Semver (SemanticVersion(..))
+import Semver (SemanticVersion(..), readV)
 import Test.Hspec.QuickCheck (modifyMaxSuccess)
 
 instance Arbitrary SemanticVersion where
   arbitrary = SemanticVersion <$> arbitrary
 
-genPos :: Gen Int
-genPos = abs `fmap` (arbitrary :: Gen Int) `suchThat` (> 0)
+prop_read_inverse :: SemanticVersion -> Bool
+prop_read_inverse s = (readV . show) s == s
 
 prop_eq_reflex :: SemanticVersion -> Bool
 prop_eq_reflex = reflexivity (==)
@@ -49,3 +49,5 @@ main = hspec $ do
     do modifyMaxSuccess (const 1000) $ it "prop_ord_reflex" $ property prop_ord_reflex
        modifyMaxSuccess (const 1000) $ it "prop_ord_trans" $ property prop_ord_trans
        modifyMaxSuccess (const 1000) $ it "prop_ord_antisym" $ property prop_ord_antisym
+  describe "Show" $
+    do modifyMaxSuccess (const 1000) $ it "prop_read_inverse" $ property prop_read_inverse
