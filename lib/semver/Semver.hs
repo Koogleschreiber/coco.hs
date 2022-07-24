@@ -22,12 +22,9 @@ instance Show SemanticVersion where
   show (SemanticVersion a) = tail(concatMap ((++) "." . show) a)
 
 instance Ord SemanticVersion where
- a <= b = a `lexLeq` b
-
-lexLeq :: SemanticVersion -> SemanticVersion -> Bool
-lexLeq (SemanticVersion a) (SemanticVersion b)
+ (SemanticVersion a) <= (SemanticVersion b)
   | SemanticVersion a == SemanticVersion b = True
   | null a = True
   | null b = False
-  | head a == head b = lexLeq (SemanticVersion (tail a)) (SemanticVersion (tail b))
+  | head a == head b = SemanticVersion (tail a) <= SemanticVersion (tail b)
   | otherwise = head a <= head b
