@@ -9,8 +9,10 @@ vstr a = SemanticVersion(map (\s -> read s :: Int) (splitOn "." a))
 
 instance Eq SemanticVersion where
  SemanticVersion [] == SemanticVersion [] = True
- SemanticVersion [] == SemanticVersion xs = sum xs == 0
- SemanticVersion (x:xs) == SemanticVersion [] = sum xs == 0
+ SemanticVersion [] == SemanticVersion (x:xs)
+  | x == 0 = SemanticVersion [] == SemanticVersion xs
+  | otherwise = False
+ SemanticVersion x == SemanticVersion [] = SemanticVersion [] == SemanticVersion x
  SemanticVersion (a:as) == SemanticVersion (b:bs)
   | a == b = SemanticVersion as == SemanticVersion bs
   | otherwise = a == b
