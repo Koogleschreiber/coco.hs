@@ -24,6 +24,7 @@ source-repository head
 
 library
   exposed-modules:
+      ConventionalCommit
       SemanticVersion
   other-modules:
       Paths_coco_hs
@@ -51,6 +52,8 @@ test-suite semver-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      ConventionalCommitSpec
+      SemanticVersionSpec
       Paths_coco_hs
   hs-source-dirs:
       test/semver
