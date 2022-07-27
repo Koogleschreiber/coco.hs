@@ -1,7 +1,7 @@
 import Test.QuickCheck
 import Test.Hspec
 import Data.List
-import Semver (SemanticVersion(..), readV)
+import SemanticVersion (SemanticVersion(..), readV)
 import Test.Hspec.QuickCheck (modifyMaxSuccess)
 
 instance Arbitrary SemanticVersion where

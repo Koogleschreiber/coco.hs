@@ -1,4 +1,4 @@
-module Semver(SemanticVersion(..), readV) where
+module SemanticVersion(SemanticVersion(..), readV) where
 import Data.List.Split
 import Data.Char (digitToInt)
 

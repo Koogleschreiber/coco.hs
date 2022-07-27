@@ -24,7 +24,7 @@ source-repository head
 
 library
   exposed-modules:
-      Semver
+      SemanticVersion
   other-modules:
       Paths_coco_hs
   hs-source-dirs:
