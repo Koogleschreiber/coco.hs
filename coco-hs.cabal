@@ -53,6 +53,7 @@ test-suite semver-test
   main-is: Spec.hs
   other-modules:
       ConventionalCommitSpec
+      RelationLaws
       SemanticVersionSpec
       Paths_coco_hs
   hs-source-dirs:
