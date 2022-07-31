@@ -3,7 +3,7 @@ import Test.QuickCheck
 import Test.Hspec
 import Data.List
 import RelationLaws (implies, transitivity, reflexivity)
-import SemanticVersion (SemanticVersion(..), readV, apply)
+import SemanticVersion (SemanticVersion(..), readV, apply, toList)
 import Test.Hspec.QuickCheck (modifyMaxSuccess)
 import ConventionalCommit (ChangeType(ChangeType))
 
@@ -36,6 +36,17 @@ doesNotIncrement v b = v `apply` ChangeType (getNonPositive b-1, "") == v
 doesIncrement :: SemanticVersion -> Positive Int -> Bool
 doesIncrement v b = v `apply` ChangeType (getPositive b, "") >= v
 
+endsWithZeroes :: SemanticVersion -> Positive Int -> Bool
+endsWithZeroes v b = a == zipWith (*) a (maskLastInts (length a) (index + 1))
+  where
+  index = getPositive b
+  incrementedVersion = v `apply` ChangeType (index, "")
+  a = toList incrementedVersion
+
+maskLastInts :: Int -> Int -> [Int]
+maskLastInts n z = [if x < z then 1 else 0 | x <- [0..n-1]]
+
+
 semanticVersionSuite = do
   describe "SemanticVersion Eq" $
     do modifyMaxSuccess (const 500) $ it "prop_eq_reflex" $ property prop_eq_reflex
@@ -50,3 +61,4 @@ semanticVersionSuite = do
   describe "SemanticVersion apply" $
     do modifyMaxSuccess (const 500) $ it "prop_doesNotIncrement" $ property doesNotIncrement
        modifyMaxSuccess (const 500) $ it "prop_doesIncrement" $ property doesIncrement
+       modifyMaxSuccess (const 500) $ it "prop_endsWithZeroes" $ property endsWithZeroes

@@ -1,4 +1,4 @@
-module SemanticVersion(SemanticVersion(..), readV, apply) where
+module SemanticVersion(SemanticVersion(..), readV, apply, toList) where
 import Data.List.Split
 import Data.Char (digitToInt)
 import ConventionalCommit (ChangeType (ChangeType))
@@ -30,10 +30,13 @@ instance Ord SemanticVersion where
   | head a == head b = SemanticVersion (tail a) <= SemanticVersion (tail b)
   | otherwise = head a <= head b
 
+toList :: SemanticVersion -> [Int]
+toList (SemanticVersion a) = a
+
 apply :: SemanticVersion -> ChangeType -> SemanticVersion
 apply (SemanticVersion a) (ChangeType (number, _)) = SemanticVersion (applyForList a number)
 
 applyForList :: [Int] -> Int -> [Int]
-applyForList (x:xs) 0 = (x + 1) : xs
+applyForList (x:xs) 0 = (x + 1) : map (*0) xs
 applyForList (x:xs) n = x : applyForList xs (n-1)
 applyForList xs _ = xs
